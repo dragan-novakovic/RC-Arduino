@@ -11,10 +11,10 @@ fn main() -> ! {
     let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
 
     //Controls
-    //let mut led = pins.d13.into_output();
-    let up = pins.d10.into_floating_input();
-    let down = pins.d9.into_pull_up_input();
-    ufmt::uwriteln!(&mut serial, "Got {}!\r", "Start").void_unwrap();
+    //Currently using pull down, until I understand pull up xD
+    let up = pins.d2.into_floating_input();
+    let down = pins.d4.into_floating_input();
+
     loop {
         if up.is_high() {
             ufmt::uwriteln!(&mut serial, "Got {}!\r", "Napred").void_unwrap();

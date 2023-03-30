@@ -6,6 +6,7 @@ use panic_halt as _;
 
 #[arduino_hal::entry]
 fn main() -> ! {
+    // $env:RAVEDUDE_PORT='COM3'
     let dp = arduino_hal::Peripherals::take().unwrap();
     let pins = arduino_hal::pins!(dp);
     let mut serial = arduino_hal::default_serial!(dp, pins, 57600);
@@ -30,10 +31,7 @@ fn main() -> ! {
             ufmt::uwriteln!(&mut serial, "Got {}!\r", "Napred").void_unwrap();
         }
         //send
-        nb::block!(spi.send(0b00001111)).void_unwrap();
-        // Because MISO is connected to MOSI, the read data should be the same
-        let data = nb::block!(spi.read()).void_unwrap();
-        ufmt::uwriteln!(&mut serial, "data: {}\r", data).void_unwrap();
-        arduino_hal::delay_ms(1000);
+        nb::block!(spi.send(0b110111)).void_unwrap();
+        arduino_hal::delay_ms(2000);
     }
 }

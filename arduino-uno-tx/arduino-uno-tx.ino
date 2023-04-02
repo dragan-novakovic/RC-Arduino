@@ -15,7 +15,7 @@ int UPState = 0;
 int DOWNState = 0;
 int LEFTState = 0;
 int RIGHTState = 0;
-int msg = 0;
+char msg = '0';
 void setup()
 {
     // Initialize ASK Object
@@ -39,22 +39,23 @@ void loop()
     RIGHTState = digitalRead(RIGHT);
 
      if (UPState == HIGH) {
-     msg = 1;
+     msg = '1';
      }
 
      if (DOWNState == HIGH) {
-     msg = 2;
+     msg = '2';
      }
 
      if (LEFTState == HIGH) {
-     msg = 3;
+     msg = '3';
      }
 
      if (RIGHTState == HIGH) {
-     msg = 4;
+     msg = '4';
      }
      Serial.print(msg);
-    rf_driver.send((uint8_t *)&msg, sizeof(msg));
+    rf_driver.send((uint8_t *)&msg, 1);
     rf_driver.waitPacketSent();
     delay(1000);
+    msg = '0';
 }
